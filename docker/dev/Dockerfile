@@ -50,7 +50,8 @@ COPY go.sum /tmp/cache
 RUN chown app:app -R /tmp/cache
 USER app
 RUN cd /tmp/cache && \
-    go mod download
+    go mod download && \
+    git config --global --add safe.directory /src
 
 # Helm testing app.
 USER root

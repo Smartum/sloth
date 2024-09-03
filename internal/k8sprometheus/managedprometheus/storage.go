@@ -83,7 +83,7 @@ func mapModelToManagedPrometheus(ctx context.Context, kmeta k8sprometheus.K8sMet
 		if len(slo.Rules.SLIErrorRecRules) > 0 {
 			rule.Spec.Groups = append(rule.Spec.Groups, monitoringv1.RuleGroup{
 				Name:     fmt.Sprintf("sloth-slo-sli-recordings-%s", slo.SLO.ID),
-				Interval: "30s",
+				Interval: "60s",
 				Rules:    promRulesToKubeRules(slo.Rules.SLIErrorRecRules),
 			})
 		}
@@ -91,7 +91,7 @@ func mapModelToManagedPrometheus(ctx context.Context, kmeta k8sprometheus.K8sMet
 		if len(slo.Rules.MetadataRecRules) > 0 {
 			rule.Spec.Groups = append(rule.Spec.Groups, monitoringv1.RuleGroup{
 				Name:     fmt.Sprintf("sloth-slo-meta-recordings-%s", slo.SLO.ID),
-				Interval: "30s",
+				Interval: "60s",
 				Rules:    promRulesToKubeRules(slo.Rules.MetadataRecRules),
 			})
 		}
@@ -99,7 +99,7 @@ func mapModelToManagedPrometheus(ctx context.Context, kmeta k8sprometheus.K8sMet
 		if len(slo.Rules.AlertRules) > 0 {
 			rule.Spec.Groups = append(rule.Spec.Groups, monitoringv1.RuleGroup{
 				Name:     fmt.Sprintf("sloth-slo-alerts-%s", slo.SLO.ID),
-				Interval: "30s",
+				Interval: "60s",
 				Rules:    promRulesToKubeRules(slo.Rules.AlertRules),
 			})
 		}
