@@ -80,7 +80,7 @@ metadata:
   namespace: test-ns
 spec:
   groups:
-  - interval: 30s
+  - interval: 60s
     name: sloth-slo-sli-recordings-test1
     rules:
     - expr: test-expr
@@ -131,7 +131,7 @@ metadata:
   namespace: test-ns
 spec:
   groups:
-  - interval: 30s
+  - interval: 60s
     name: sloth-slo-meta-recordings-test1
     rules:
     - expr: test-expr
@@ -183,7 +183,7 @@ metadata:
   namespace: test-ns
 spec:
   groups:
-  - interval: 30s
+  - interval: 60s
     name: sloth-slo-alerts-test1
     rules:
     - alert: testAlert
@@ -295,7 +295,7 @@ metadata:
   namespace: test-ns
 spec:
   groups:
-  - interval: 30s
+  - interval: 60s
     name: sloth-slo-sli-recordings-testa
     rules:
     - expr: test-expr-a1
@@ -306,7 +306,7 @@ spec:
       labels:
         test-label: a-2
       record: test:record-a2
-  - interval: 30s
+  - interval: 60s
     name: sloth-slo-meta-recordings-testa
     rules:
     - expr: test-expr-a3
@@ -317,7 +317,7 @@ spec:
       labels:
         test-label: a-4
       record: test:record-a4
-  - interval: 30s
+  - interval: 60s
     name: sloth-slo-alerts-testa
     rules:
     - alert: testAlertA1
@@ -332,21 +332,21 @@ spec:
       expr: test-expr-a2
       labels:
         test-label: a-2
-  - interval: 30s
+  - interval: 60s
     name: sloth-slo-sli-recordings-testb
     rules:
     - expr: test-expr-b1
       labels:
         test-label: b-1
       record: test:record-b1
-  - interval: 30s
+  - interval: 60s
     name: sloth-slo-meta-recordings-testb
     rules:
     - expr: test-expr-b2
       labels:
         test-label: b-2
       record: test:record-b2
-  - interval: 30s
+  - interval: 60s
     name: sloth-slo-alerts-testb
     rules:
     - alert: testAlertB1
@@ -528,7 +528,7 @@ func TestPrometheusOperatorCRDRepo(t *testing.T) {
 						Groups: []monitoringv1.RuleGroup{
 							{
 								Name:     "sloth-slo-sli-recordings-testa",
-								Interval: "30s",
+								Interval: "60s",
 								Rules: []monitoringv1.Rule{
 									{
 										Record: "test:record-a1",
@@ -544,7 +544,7 @@ func TestPrometheusOperatorCRDRepo(t *testing.T) {
 							},
 							{
 								Name:     "sloth-slo-meta-recordings-testa",
-								Interval: "30s",
+								Interval: "60s",
 								Rules: []monitoringv1.Rule{
 									{
 										Record: "test:record-a3",
@@ -560,7 +560,7 @@ func TestPrometheusOperatorCRDRepo(t *testing.T) {
 							},
 							{
 								Name:     "sloth-slo-alerts-testa",
-								Interval: "30s",
+								Interval: "60s",
 								Rules: []monitoringv1.Rule{
 									{
 										Alert:       "testAlertA1",
@@ -578,7 +578,7 @@ func TestPrometheusOperatorCRDRepo(t *testing.T) {
 							},
 							{
 								Name:     "sloth-slo-sli-recordings-testb",
-								Interval: "30s",
+								Interval: "60s",
 								Rules: []monitoringv1.Rule{
 									{
 										Record: "test:record-b1",
@@ -589,7 +589,7 @@ func TestPrometheusOperatorCRDRepo(t *testing.T) {
 							},
 							{
 								Name:     "sloth-slo-meta-recordings-testb",
-								Interval: "30s",
+								Interval: "60s",
 								Rules: []monitoringv1.Rule{
 									{
 										Record: "test:record-b2",
@@ -600,7 +600,7 @@ func TestPrometheusOperatorCRDRepo(t *testing.T) {
 							},
 							{
 								Name:     "sloth-slo-alerts-testb",
-								Interval: "30s",
+								Interval: "60s",
 								Rules: []monitoringv1.Rule{
 									{
 										Alert:       "testAlertB1",

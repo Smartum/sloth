@@ -555,7 +555,7 @@ func getBaseManagedPromOpRules(slothVersion string) *managedprometheusv1.Rules {
 			Groups: []managedprometheusv1.RuleGroup{
 				{
 					Name:     "sloth-slo-sli-recordings-svc01-slo01",
-					Interval: "30s",
+					Interval: "60s",
 					Rules: []managedprometheusv1.Rule{
 						{
 							Record: "slo:sli_error:ratio_rate5m",
@@ -657,7 +657,7 @@ func getBaseManagedPromOpRules(slothVersion string) *managedprometheusv1.Rules {
 				},
 				{
 					Name:     "sloth-slo-meta-recordings-svc01-slo01",
-					Interval: "30s",
+					Interval: "60s",
 					Rules: []managedprometheusv1.Rule{
 						{
 							Record: "slo:objective:ratio",
@@ -745,7 +745,7 @@ func getBaseManagedPromOpRules(slothVersion string) *managedprometheusv1.Rules {
 
 				{
 					Name:     "sloth-slo-alerts-svc01-slo01",
-					Interval: "30s",
+					Interval: "60s",
 					Rules: []managedprometheusv1.Rule{
 						{
 							Alert: "myServiceAlert",
@@ -777,7 +777,7 @@ func getBaseManagedPromOpRules(slothVersion string) *managedprometheusv1.Rules {
 				},
 				{
 					Name:     "sloth-slo-sli-recordings-svc01-slo02",
-					Interval: "30s",
+					Interval: "60s",
 					Rules: []managedprometheusv1.Rule{
 						{
 							Record: "slo:sli_error:ratio_rate5m",
@@ -871,7 +871,7 @@ func getBaseManagedPromOpRules(slothVersion string) *managedprometheusv1.Rules {
 				},
 				{
 					Name:     "sloth-slo-meta-recordings-svc01-slo02",
-					Interval: "30s",
+					Interval: "60s",
 					Rules: []managedprometheusv1.Rule{
 						{
 							Record: "slo:objective:ratio",
