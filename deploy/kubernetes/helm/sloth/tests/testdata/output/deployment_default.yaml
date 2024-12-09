@@ -32,10 +32,11 @@ spec:
       serviceAccountName: sloth
       containers:
         - name: sloth
-          image: ghcr.io/slok/sloth:v0.10.0
+          image: ghcr.io/slok/sloth:v0.11.0
           args:
             - kubernetes-controller
             - --sli-plugins-path=/plugins
+            - --logger=default
           ports:
             - containerPort: 8081
               name: metrics
@@ -45,12 +46,13 @@ spec:
               mountPath: /plugins/sloth-common-sli-plugins
           resources:
             limits:
+              cpu: 50m
               memory: 150Mi
             requests:
               cpu: 5m
               memory: 75Mi
         - name: git-sync-plugins
-          image: k8s.gcr.io/git-sync/git-sync:v3.3.4
+          image: k8s.gcr.io/git-sync/git-sync:v3.6.1
           args:
             - --repo=https://github.com/slok/sloth-common-sli-plugins
             - --branch=main
@@ -62,6 +64,7 @@ spec:
               mountPath: /tmp/git
           resources:
             limits:
+              cpu: 50m
               memory: 100Mi
             requests:
               cpu: 5m

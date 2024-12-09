@@ -38,7 +38,8 @@ func customValues() msi {
 		},
 
 		"metrics": msi{
-			"enabled": true,
+			"enabled":        true,
+			"scrapeInterval": "45s",
 			"prometheusLabels": msi{
 				"kp1": "vp1",
 				"kp2": "vp2",
@@ -48,6 +49,18 @@ func customValues() msi {
 		"customSloConfig": msi{
 			"data": msi{
 				"customKey": "customValue",
+			},
+		},
+
+		"securityContext": msi{
+			"pod": msi{
+				"runAsNonRoot": true,
+				"runAsGroup":   1000,
+				"runAsUser":    100,
+				"fsGroup":      100,
+			},
+			"container": msi{
+				"allowPrivilegeEscalation": false,
 			},
 		},
 	}
