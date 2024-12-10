@@ -9,15 +9,15 @@ jobs:
     # Execute the checks inside the container instead the VM.
     container: golangci/golangci-lint:v1.43.0-alpine
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: ./scripts/check/check.sh
 
   unit-test:
     name: Unit test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-go@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
         with:
           go-version: 1.18
       - run: make ci-test
@@ -31,13 +31,13 @@ jobs:
     name: Helm chart test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-go@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
         with:
-          go-version: 1.18
+          go-version: 1.23
       - name: Execute tests
         env:
-          HELM_VERSION: v3.6.3
+          HELM_VERSION: v3.16.3
         run: |
           # Get dependencies.
           echo "Getting dependencies..."
@@ -48,10 +48,10 @@ jobs:
     name: Integration test CLI
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-go@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
         with:
-          go-version: 1.18
+          go-version: 1.23
       - name: Execute tests
         run: |
           # Build binary.
@@ -70,13 +70,13 @@ jobs:
       matrix:
         kubernetes: [1.19.11, 1.20.7, 1.21.1, 1.22.0, 1.23.0]
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-go@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
         with:
-          go-version: 1.18
+          go-version: 1.23
       - name: Execute tests
         env:
-          KIND_VERSION: v0.11.0
+          KIND_VERSION: v0.25.0
         run: |
           # Get dependencies.
           echo "Getting dependencies..."
@@ -112,7 +112,7 @@ jobs:
     name: Release images
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Docker login
         run: docker login ghcr.io -u ${{ github.actor }} -p "${{ secrets.GITHUB_TOKEN }}"
       - name: Build and publish docker images
@@ -127,7 +127,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "VERSION=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV} # Sets VERSION env var.
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Docker login
         run: docker login ghcr.io -u ${{ github.actor }} -p "${{ secrets.GITHUB_TOKEN }}"
       - name: Build and publish docker images
@@ -140,7 +140,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "VERSION=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV} # Sets VERSION env var.
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Build binaries
         run: |
           mkdir -p ./bin

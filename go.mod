@@ -1,6 +1,6 @@
 module github.com/slok/sloth
 
-go 1.18
+go 1.23
 
 require (
 	github.com/GoogleCloudPlatform/prometheus-engine v0.4.3
