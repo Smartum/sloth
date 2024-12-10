@@ -1,9 +1,9 @@
 # Set also `ARCH` ARG here so we can use it on all the `FROM`s. 
 ARG ARCH
 
-FROM golang:1.19.3-alpine as build-stage
+FROM golang:1.23-alpine as build-stage
 
-LABEL org.opencontainers.image.source https://github.com/slok/sloth
+LABEL org.opencontainers.image.source="https://github.com/slok/sloth"
 
 RUN apk --no-cache add \
     g++ \

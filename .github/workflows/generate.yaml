@@ -11,7 +11,7 @@ jobs:
     name: Generate the SLOs
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: download and setup generator binary
         run: |       
           wget https://github.com/slok/sloth/releases/download/v0.9.0/sloth-linux-amd64
@@ -19,7 +19,7 @@ jobs:
           ./sloth-linux-amd64 generate -i ./examples/getting-started.yml -o ./examples/_gen/getting-started.yml
           ./sloth-linux-amd64 generate -i ./examples/no-alerts.yml -o ./examples/_gen/no-alerts.yml
       - name: 'Upload directory with generated SLOs'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: SLOs
           path: examples/_gen/
