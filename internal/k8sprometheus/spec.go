@@ -2,6 +2,7 @@ package k8sprometheus
 
 import (
 	"context"
+
 	"github.com/slok/sloth/internal/prometheus"
 )
 

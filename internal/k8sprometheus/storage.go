@@ -3,6 +3,7 @@ package k8sprometheus
 import (
 	"context"
 	"fmt"
+
 	managedPromAPIV1 "github.com/GoogleCloudPlatform/prometheus-engine/pkg/operator/apis/monitoring/v1"
 	promOpAPIV1 "github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring/v1"
 	"github.com/slok/sloth/internal/prometheus"

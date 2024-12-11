@@ -3,9 +3,10 @@ package prometheusoperator_test
 import (
 	"context"
 	"fmt"
-	"github.com/slok/sloth/internal/k8sprometheus/prometheusoperator"
 	"testing"
 	"time"
+
+	"github.com/slok/sloth/internal/k8sprometheus/prometheusoperator"
 
 	"github.com/stretchr/testify/assert"
 

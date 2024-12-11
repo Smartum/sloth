@@ -3,9 +3,10 @@ package managedprometheus_test
 import (
 	"context"
 	"fmt"
-	"github.com/slok/sloth/internal/k8sprometheus/managedprometheus"
 	"testing"
 	"time"
+
+	"github.com/slok/sloth/internal/k8sprometheus/managedprometheus"
 
 	"github.com/stretchr/testify/assert"
 

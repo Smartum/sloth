@@ -2,8 +2,9 @@ package k8sprometheus
 
 import (
 	"context"
-	managedpromv1 "github.com/GoogleCloudPlatform/prometheus-engine/pkg/operator/apis/monitoring/v1"
 	"time"
+
+	managedpromv1 "github.com/GoogleCloudPlatform/prometheus-engine/pkg/operator/apis/monitoring/v1"
 
 	managedprometheusclientset "github.com/GoogleCloudPlatform/prometheus-engine/pkg/operator/generated/clientset/versioned"
 	managedprometheusclientsetfake "github.com/GoogleCloudPlatform/prometheus-engine/pkg/operator/generated/clientset/versioned/fake"
@@ -149,7 +150,9 @@ func (k KubernetesService) EnsureManagedPrometheusServiceLevelStatus(ctx context
 		slo.Status.LastManagedPromOpRulesSuccessfulGenerated = &metav1.Time{Time: time.Now().UTC()}
 	}
 
-	_, err = k.slothCli.SlothV1().ManagedPrometheusServiceLevels(slo.Namespace).UpdateStatus(ctx, slo, metav1.UpdateOptions{})
+	if _, err := k.slothCli.SlothV1().ManagedPrometheusServiceLevels(slo.Namespace).UpdateStatus(ctx, slo, metav1.UpdateOptions{}); err != nil {
+		return err
+	}
 
 	return nil
 }

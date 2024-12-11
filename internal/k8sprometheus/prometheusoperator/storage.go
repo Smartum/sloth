@@ -4,10 +4,11 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"io"
+
 	monitoringv1 "github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring/v1"
 	"github.com/prometheus/prometheus/model/rulefmt"
 	"github.com/slok/sloth/internal/k8sprometheus"
-	"io"
 	"k8s.io/apimachinery/pkg/util/intstr"
 
 	"github.com/slok/sloth/internal/log"
@@ -133,21 +134,21 @@ func promRulesToKubeRules(rules []rulefmt.Rule) []monitoringv1.Rule {
 	return res
 }
 
-func NewPrometheusOperatorCRDRepo(ensurer k8sprometheus.PrometheusRulesEnsurer, logger log.Logger) PrometheusOperatorCRDRepo {
-	return PrometheusOperatorCRDRepo{
+func NewPrometheusOperatorCRDRepo(ensurer k8sprometheus.PrometheusRulesEnsurer, logger log.Logger) CRDRepo {
+	return CRDRepo{
 		ensurer: ensurer,
 		logger:  logger.WithValues(log.Kv{"svc": "storage.PrometheusOperatorCRDAPIServer", "format": "k8s-prometheus-operator"}),
 	}
 }
 
-// PrometheusOperatorCRDRepo knows to store all the SLO rules (recordings and alerts)
+// CRDRepo knows to store all the SLO rules (recordings and alerts)
 // grouped as a Kubernetes prometheus operator CR using Kubernetes API server.
-type PrometheusOperatorCRDRepo struct {
+type CRDRepo struct {
 	logger  log.Logger
 	ensurer k8sprometheus.PrometheusRulesEnsurer
 }
 
-func (p PrometheusOperatorCRDRepo) StoreSLOs(ctx context.Context, kmeta k8sprometheus.K8sMeta, slos []k8sprometheus.StorageSLO) error {
+func (p CRDRepo) StoreSLOs(ctx context.Context, kmeta k8sprometheus.K8sMeta, slos []k8sprometheus.StorageSLO) error {
 	// Map to the Prometheus operator CRD.
 	rule, err := mapModelToPrometheusOperator(ctx, kmeta, slos)
 	if err != nil {

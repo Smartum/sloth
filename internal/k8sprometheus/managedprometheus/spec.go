@@ -3,14 +3,15 @@ package managedprometheus
 import (
 	"context"
 	"fmt"
+	"regexp"
+	"time"
+
 	"github.com/slok/sloth/internal/k8sprometheus"
 	"github.com/slok/sloth/internal/prometheus"
 	v1 "github.com/slok/sloth/pkg/kubernetes/api/sloth/v1"
 	"github.com/slok/sloth/pkg/kubernetes/gen/clientset/versioned/scheme"
 	prometheuspluginv1 "github.com/slok/sloth/pkg/prometheus/plugin/v1"
 	"k8s.io/apimachinery/pkg/runtime"
-	"regexp"
-	"time"
 )
 
 var (
