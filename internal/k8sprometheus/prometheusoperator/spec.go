@@ -3,9 +3,10 @@ package prometheusoperator
 import (
 	"context"
 	"fmt"
-	"github.com/slok/sloth/internal/k8sprometheus"
 	"regexp"
 	"time"
+
+	"github.com/slok/sloth/internal/k8sprometheus"
 
 	"k8s.io/apimachinery/pkg/runtime"
 

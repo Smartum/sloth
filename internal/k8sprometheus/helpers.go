@@ -2,6 +2,7 @@ package k8sprometheus
 
 import (
 	"fmt"
+
 	"github.com/slok/sloth/internal/info"
 )
 

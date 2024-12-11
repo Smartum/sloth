@@ -3,13 +3,14 @@ package commands
 import (
 	"context"
 	"fmt"
-	"github.com/slok/sloth/internal/k8sprometheus/managedprometheus"
-	"github.com/slok/sloth/internal/k8sprometheus/prometheusoperator"
 	"io"
 	"io/fs"
 	"os"
 	"regexp"
 	"time"
+
+	"github.com/slok/sloth/internal/k8sprometheus/managedprometheus"
+	"github.com/slok/sloth/internal/k8sprometheus/prometheusoperator"
 
 	prometheusmodel "github.com/prometheus/common/model"
 	"gopkg.in/alecthomas/kingpin.v2"
@@ -182,7 +183,7 @@ func (v validateCommand) Run(ctx context.Context, config RootConfig) error {
 			case managedPromYAMLLoader.IsSpecType(ctx, dataB):
 				sloGroup, k8sErr := managedPromYAMLLoader.LoadSpec(ctx, dataB)
 				if k8sErr == nil {
-					err := generateManagedPrometheus(ctx, log.Noop, windowsRepo, false, false, false, v.extraLabels, *sloGroup, io.Discard)
+					err := gen.generateManagedPrometheus(ctx, *sloGroup, io.Discard)
 					if err != nil {
 						validation.Errs = []error{fmt.Errorf("could not generate Kubernetes format rules: %w", err)}
 					}
