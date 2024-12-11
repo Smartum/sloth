@@ -53,12 +53,13 @@ func (_m *PrometheusRulesEnsurer) EnsurePrometheusRule(ctx context.Context, pr *
 	return r0
 }
 
-// NewPrometheusRulesEnsurer creates a new instance of PrometheusRulesEnsurer. It also registers a testing interface on the mock and a cleanup function to assert the mocks expectations.
-// The first argument is typically a *testing.T value.
-func NewPrometheusRulesEnsurer(t interface {
+type mockConstructorTestingTNewPrometheusRulesEnsurer interface {
 	mock.TestingT
 	Cleanup(func())
-}) *PrometheusRulesEnsurer {
+}
+
+// NewPrometheusRulesEnsurer creates a new instance of PrometheusRulesEnsurer. It also registers a testing interface on the mock and a cleanup function to assert the mocks expectations.
+func NewPrometheusRulesEnsurer(t mockConstructorTestingTNewPrometheusRulesEnsurer) *PrometheusRulesEnsurer {
 	mock := &PrometheusRulesEnsurer{}
 	mock.Mock.Test(t)
 

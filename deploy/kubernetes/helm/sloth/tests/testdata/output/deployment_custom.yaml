@@ -32,6 +32,11 @@ spec:
         kubectl.kubernetes.io/default-container: sloth
     spec:
       serviceAccountName: sloth-test
+      securityContext:
+        fsGroup: 100
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 100
       containers:
         - name: sloth
           image: slok/sloth-test:v1.42.42
@@ -45,6 +50,7 @@ spec:
             - --extra-labels=k2=v2
             - --sli-plugins-path=/plugins
             - --disable-optimized-rules
+            - --logger=default
           ports:
             - containerPort: 8081
               name: metrics
@@ -52,8 +58,11 @@ spec:
           volumeMounts:
             - name: sloth-common-sli-plugins
               mountPath: /plugins/sloth-common-sli-plugins
+          securityContext:
+            allowPrivilegeEscalation: false
           resources:
             limits:
+              cpu: 50m
               memory: 150Mi
             requests:
               cpu: 5m
@@ -69,8 +78,11 @@ spec:
             - name: sloth-common-sli-plugins
               # Default path for git-sync.
               mountPath: /tmp/git
+          securityContext:
+            allowPrivilegeEscalation: false
           resources:
             limits:
+              cpu: 50m
               memory: 100Mi
             requests:
               cpu: 5m

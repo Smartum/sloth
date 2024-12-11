@@ -75,12 +75,13 @@ func (_m *FileManager) ReadFile(ctx context.Context, path string) ([]byte, error
 	return r0, r1
 }
 
-// NewFileManager creates a new instance of FileManager. It also registers a testing interface on the mock and a cleanup function to assert the mocks expectations.
-// The first argument is typically a *testing.T value.
-func NewFileManager(t interface {
+type mockConstructorTestingTNewFileManager interface {
 	mock.TestingT
 	Cleanup(func())
-}) *FileManager {
+}
+
+// NewFileManager creates a new instance of FileManager. It also registers a testing interface on the mock and a cleanup function to assert the mocks expectations.
+func NewFileManager(t mockConstructorTestingTNewFileManager) *FileManager {
 	mock := &FileManager{}
 	mock.Mock.Test(t)
 
