@@ -4,8 +4,9 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"github.com/slok/sloth/internal/k8sprometheus/prometheusoperator"
 	"testing"
+
+	"github.com/slok/sloth/internal/k8sprometheus/prometheusoperator"
 
 	monitoringv1 "github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring/v1"
 	"github.com/prometheus/prometheus/model/rulefmt"

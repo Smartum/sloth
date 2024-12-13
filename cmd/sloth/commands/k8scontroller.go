@@ -3,11 +3,6 @@ package commands
 import (
 	"context"
 	"fmt"
-	managedpromv1 "github.com/GoogleCloudPlatform/prometheus-engine/pkg/operator/apis/monitoring/v1"
-	managedprometheusclientset "github.com/GoogleCloudPlatform/prometheus-engine/pkg/operator/generated/clientset/versioned"
-	monitoringv1 "github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring/v1"
-	"github.com/slok/sloth/internal/k8sprometheus/managedprometheus"
-	"github.com/slok/sloth/internal/k8sprometheus/prometheusoperator"
 	"io/fs"
 	"net/http"
 	"net/http/pprof"
@@ -16,6 +11,12 @@ import (
 	"path/filepath"
 	"syscall"
 	"time"
+
+	managedpromv1 "github.com/GoogleCloudPlatform/prometheus-engine/pkg/operator/apis/monitoring/v1"
+	managedprometheusclientset "github.com/GoogleCloudPlatform/prometheus-engine/pkg/operator/generated/clientset/versioned"
+	monitoringv1 "github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring/v1"
+	"github.com/slok/sloth/internal/k8sprometheus/managedprometheus"
+	"github.com/slok/sloth/internal/k8sprometheus/prometheusoperator"
 
 	"github.com/oklog/run"
 	monitoringclientset "github.com/prometheus-operator/prometheus-operator/pkg/client/versioned"

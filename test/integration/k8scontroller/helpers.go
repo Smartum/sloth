@@ -3,11 +3,12 @@ package k8scontroller
 import (
 	"context"
 	"fmt"
-	managedprometheusclientset "github.com/GoogleCloudPlatform/prometheus-engine/pkg/operator/generated/clientset/versioned"
 	"os"
 	"os/exec"
 	"testing"
 	"time"
+
+	managedprometheusclientset "github.com/GoogleCloudPlatform/prometheus-engine/pkg/operator/generated/clientset/versioned"
 
 	monitoringclientset "github.com/prometheus-operator/prometheus-operator/pkg/client/versioned"
 	corev1 "k8s.io/api/core/v1"

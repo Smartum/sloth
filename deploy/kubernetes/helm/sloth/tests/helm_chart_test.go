@@ -73,6 +73,8 @@ func TestChartServiceAccount(t *testing.T) {
 }
 
 func TestChartDeployment(t *testing.T) {
+	checksumNormalizer := regexp.MustCompile(`checksum/config: [a-z0-9]+`)
+
 	tests := map[string]struct {
 		name       string
 		namespace  string
@@ -120,8 +122,6 @@ func TestChartDeployment(t *testing.T) {
 			expTplFile: "testdata/output/deployment_custom_slo_config.yaml",
 		},
 	}
-
-	checksumNormalizer := regexp.MustCompile(`checksum/config: [a-z0-9]+`)
 
 	for name, test := range tests {
 		t.Run(name, func(t *testing.T) {
