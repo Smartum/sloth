@@ -68,6 +68,7 @@ slos:
 - [Constants](<#constants>)
 - [type Alert](<#Alert>)
 - [type Alerting](<#Alerting>)
+- [type Interval](<#Interval>)
 - [type SLI](<#SLI>)
 - [type SLIEvents](<#SLIEvents>)
 - [type SLIPlugin](<#SLIPlugin>)
@@ -85,7 +86,7 @@ const Version = "prometheus/v1"
 ```
 
 <a name="Alert"></a>
-## type [Alert](<https://github.com/Smartum/sloth/blob/main/pkg/prometheus/api/v1/v1.go#L152-L161>)
+## type [Alert](<https://github.com/Smartum/sloth/blob/main/pkg/prometheus/api/v1/v1.go#L157-L166>)
 
 Alert configures specific SLO alert.
 
@@ -103,7 +104,7 @@ type Alert struct {
 ```
 
 <a name="Alerting"></a>
-## type [Alerting](<https://github.com/Smartum/sloth/blob/main/pkg/prometheus/api/v1/v1.go#L137-L149>)
+## type [Alerting](<https://github.com/Smartum/sloth/blob/main/pkg/prometheus/api/v1/v1.go#L142-L154>)
 
 Alerting wraps all the configuration required by the SLO alerts.
 
@@ -123,8 +124,27 @@ type Alerting struct {
 }
 ```
 
+<a name="Interval"></a>
+## type [Interval](<https://github.com/Smartum/sloth/blob/main/pkg/prometheus/api/v1/v1.go#L168-L178>)
+
+
+
+```go
+type Interval struct {
+    // RuleGroupInterval is an optional value for how often the Prometheus rule_group should be evaluated.
+    // RuleGroupInterval string `yaml:"rulegroup_interval,omitempty"`
+    RuleGroupInterval time.Duration `yaml:"all,omitempty"`
+    // Otherwise, specify custom rule_group intervals for each set of recording rules.
+    // RuleGroupInterval will "fill-in" for any non-specified individual groups
+    // but individual group settings override RuleGroupInterval.
+    SLIErrorRulesInterval time.Duration `yaml:"slierror,omitempty"`
+    MetadataRulesInterval time.Duration `yaml:"metadata,omitempty"`
+    AlertRulesInterval    time.Duration `yaml:"alert,omitempty"`
+}
+```
+
 <a name="SLI"></a>
-## type [SLI](<https://github.com/Smartum/sloth/blob/main/pkg/prometheus/api/v1/v1.go#L99-L106>)
+## type [SLI](<https://github.com/Smartum/sloth/blob/main/pkg/prometheus/api/v1/v1.go#L104-L111>)
 
 SLI will tell what is good or bad for the SLO. All SLIs will be get based on time windows, that's why Sloth needs the queries to use \`\{\{.window\}\}\` template variable.
 
@@ -142,7 +162,7 @@ type SLI struct {
 ```
 
 <a name="SLIEvents"></a>
-## type [SLIEvents](<https://github.com/Smartum/sloth/blob/main/pkg/prometheus/api/v1/v1.go#L117-L126>)
+## type [SLIEvents](<https://github.com/Smartum/sloth/blob/main/pkg/prometheus/api/v1/v1.go#L122-L131>)
 
 SLIEvents is an SLI that is calculated as the division of bad events and total events, giving a ratio SLI. Normally this is the most common ratio type.
 
@@ -160,7 +180,7 @@ type SLIEvents struct {
 ```
 
 <a name="SLIPlugin"></a>
-## type [SLIPlugin](<https://github.com/Smartum/sloth/blob/main/pkg/prometheus/api/v1/v1.go#L129-L134>)
+## type [SLIPlugin](<https://github.com/Smartum/sloth/blob/main/pkg/prometheus/api/v1/v1.go#L134-L139>)
 
 SLIPlugin will use the SLI returned by the SLI plugin selected along with the options.
 
@@ -174,7 +194,7 @@ type SLIPlugin struct {
 ```
 
 <a name="SLIRaw"></a>
-## type [SLIRaw](<https://github.com/Smartum/sloth/blob/main/pkg/prometheus/api/v1/v1.go#L110-L113>)
+## type [SLIRaw](<https://github.com/Smartum/sloth/blob/main/pkg/prometheus/api/v1/v1.go#L115-L118>)
 
 SLIRaw is a error ratio SLI already calculated. Normally this will be used when the SLI is already calculated by other recording rule, system...
 
@@ -186,7 +206,7 @@ type SLIRaw struct {
 ```
 
 <a name="SLO"></a>
-## type [SLO](<https://github.com/Smartum/sloth/blob/main/pkg/prometheus/api/v1/v1.go#L76-L92>)
+## type [SLO](<https://github.com/Smartum/sloth/blob/main/pkg/prometheus/api/v1/v1.go#L78-L97>)
 
 SLO is the configuration/declaration of the service level objective of a service.
 
@@ -207,11 +227,14 @@ type SLO struct {
     // Alerting is the configuration with all the things related with the SLO
     // alerts.
     Alerting Alerting `yaml:"alerting"`
+    // Interval is the configuration for all things related to SLO rule_group intervals
+    // for specific rule groups and all rules.
+    Interval Interval `yaml:"interval,omitempty"`
 }
 ```
 
 <a name="Spec"></a>
-## type [Spec](<https://github.com/Smartum/sloth/blob/main/pkg/prometheus/api/v1/v1.go#L62-L72>)
+## type [Spec](<https://github.com/Smartum/sloth/blob/main/pkg/prometheus/api/v1/v1.go#L64-L74>)
 
 Spec represents the root type of the SLOs declaration specification.
 

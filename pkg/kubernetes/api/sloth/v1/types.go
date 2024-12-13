@@ -1,6 +1,8 @@
 package v1
 
 import (
+	"time"
+
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -78,6 +80,11 @@ type SLO struct {
 	// Alerting is the configuration with all the things related with the SLO
 	// alerts.
 	Alerting Alerting `json:"alerting"`
+
+	// Interval is the configuration for all things related to SLO rule_group intervals
+	// for specific rule groups and all rules.
+	// +optional
+	Interval Interval `json:"interval,omitempty"`
 }
 
 // SLI will tell what is good or bad for the SLO.
@@ -150,6 +157,18 @@ type Alerting struct {
 
 	// TicketAlert alert refers to the warning alert (check multiwindow-multiburn alerts).
 	TicketAlert Alert `json:"ticketAlert,omitempty"`
+}
+
+type Interval struct {
+	// RuleGroupInterval is an optional value for how often the Prometheus rule_group should be evaluated.
+	// RuleGroupInterval string `json:"rulegroup_interval,omitempty"`
+	RuleGroupInterval time.Duration `json:"all,omitempty"`
+	// Otherwise, specify custom rule_group intervals for each set of recording rules.
+	// RuleGroupInterval will "fill-in" for any non-specified individual groups
+	// but individual group settings override RuleGroupInterval.
+	SLIErrorRulesInterval time.Duration `json:"slierror,omitempty"`
+	MetadataRulesInterval time.Duration `json:"metadata,omitempty"`
+	AlertRulesInterval    time.Duration `json:"alert,omitempty"`
 }
 
 // Alert configures specific SLO alert.
