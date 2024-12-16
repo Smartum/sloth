@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"time"
 
 	monitoringv1 "github.com/GoogleCloudPlatform/prometheus-engine/pkg/operator/apis/monitoring/v1"
 	"github.com/prometheus/prometheus/model/rulefmt"
@@ -81,28 +82,60 @@ func mapModelToManagedPrometheus(ctx context.Context, kmeta k8sprometheus.K8sMet
 	}
 
 	for _, slo := range slos {
+		defaultInterval := "60s"
+
 		if len(slo.Rules.SLIErrorRecRules) > 0 {
-			rule.Spec.Groups = append(rule.Spec.Groups, monitoringv1.RuleGroup{
-				Name:     fmt.Sprintf("sloth-slo-sli-recordings-%s", slo.SLO.ID),
-				Interval: "60s",
-				Rules:    promRulesToKubeRules(slo.Rules.SLIErrorRecRules),
-			})
+			group := monitoringv1.RuleGroup{
+				Name:  fmt.Sprintf("sloth-slo-sli-recordings-%s", slo.SLO.ID),
+				Rules: promRulesToKubeRules(slo.Rules.SLIErrorRecRules),
+			}
+
+			switch {
+			case slo.SLO.SLIErrorRulesInterval != 0:
+				group.Interval = parseDuration(slo.SLO.SLIErrorRulesInterval)
+			case slo.SLO.RuleGroupInterval != 0:
+				group.Interval = parseDuration(slo.SLO.RuleGroupInterval)
+			default:
+				group.Interval = defaultInterval
+			}
+
+			rule.Spec.Groups = append(rule.Spec.Groups, group)
 		}
 
 		if len(slo.Rules.MetadataRecRules) > 0 {
-			rule.Spec.Groups = append(rule.Spec.Groups, monitoringv1.RuleGroup{
-				Name:     fmt.Sprintf("sloth-slo-meta-recordings-%s", slo.SLO.ID),
-				Interval: "60s",
-				Rules:    promRulesToKubeRules(slo.Rules.MetadataRecRules),
-			})
+			group := monitoringv1.RuleGroup{
+				Name:  fmt.Sprintf("sloth-slo-meta-recordings-%s", slo.SLO.ID),
+				Rules: promRulesToKubeRules(slo.Rules.MetadataRecRules),
+			}
+
+			switch {
+			case slo.SLO.MetadataRulesInterval != 0:
+				group.Interval = parseDuration(slo.SLO.MetadataRulesInterval)
+			case slo.SLO.RuleGroupInterval != 0:
+				group.Interval = parseDuration(slo.SLO.RuleGroupInterval)
+			default:
+				group.Interval = defaultInterval
+			}
+
+			rule.Spec.Groups = append(rule.Spec.Groups, group)
 		}
 
 		if len(slo.Rules.AlertRules) > 0 {
-			rule.Spec.Groups = append(rule.Spec.Groups, monitoringv1.RuleGroup{
-				Name:     fmt.Sprintf("sloth-slo-alerts-%s", slo.SLO.ID),
-				Interval: "60s",
-				Rules:    promRulesToKubeRules(slo.Rules.AlertRules),
-			})
+			group := monitoringv1.RuleGroup{
+				Name:  fmt.Sprintf("sloth-slo-alerts-%s", slo.SLO.ID),
+				Rules: promRulesToKubeRules(slo.Rules.AlertRules),
+			}
+
+			switch {
+			case slo.SLO.AlertRulesInterval != 0:
+				group.Interval = parseDuration(slo.SLO.AlertRulesInterval)
+			case slo.SLO.RuleGroupInterval != 0:
+				group.Interval = parseDuration(slo.SLO.RuleGroupInterval)
+			default:
+				group.Interval = defaultInterval
+			}
+
+			rule.Spec.Groups = append(rule.Spec.Groups, group)
 		}
 	}
 
@@ -133,6 +166,19 @@ func promRulesToKubeRules(rules []rulefmt.Rule) []monitoringv1.Rule {
 		})
 	}
 	return res
+}
+
+func parseDuration(d time.Duration) string {
+	if d == 0 {
+		return ""
+	}
+	if d.Hours() == float64(int(d.Hours())) {
+		return fmt.Sprintf("%dh", int(d.Hours()))
+	}
+	if d.Minutes() == float64(int(d.Minutes())) {
+		return fmt.Sprintf("%dm", int(d.Minutes()))
+	}
+	return d.String()
 }
 
 func NewCRDRepo(ensurer k8sprometheus.PrometheusRulesEnsurer, logger log.Logger) CRDRepo {

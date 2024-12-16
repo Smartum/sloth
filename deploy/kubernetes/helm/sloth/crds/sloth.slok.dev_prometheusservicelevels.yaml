@@ -148,6 +148,39 @@ spec:
                     description:
                       description: Description is the description of the SLO.
                       type: string
+                    interval:
+                      description: Interval is the configuration for all things related
+                        to SLO rule_group intervals for specific rule groups and all
+                        rules.
+                      properties:
+                        alert:
+                          description: A Duration represents the elapsed time between
+                            two instants as an int64 nanosecond count. The representation
+                            limits the largest representable duration to approximately
+                            290 years.
+                          format: int64
+                          type: integer
+                        all:
+                          description: RuleGroupInterval is an optional value for
+                            how often the Prometheus rule_group should be evaluated.
+                            RuleGroupInterval string `json:"rulegroup_interval,omitempty"`
+                          format: int64
+                          type: integer
+                        metadata:
+                          description: A Duration represents the elapsed time between
+                            two instants as an int64 nanosecond count. The representation
+                            limits the largest representable duration to approximately
+                            290 years.
+                          format: int64
+                          type: integer
+                        slierror:
+                          description: Otherwise, specify custom rule_group intervals
+                            for each set of recording rules. RuleGroupInterval will
+                            "fill-in" for any non-specified individual groups but
+                            individual group settings override RuleGroupInterval.
+                          format: int64
+                          type: integer
+                      type: object
                     labels:
                       additionalProperties:
                         type: string
